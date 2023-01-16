@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ContactListUl, ContactListLi, Button } from './ContactList.syled';
+import { ContactListUl, ContactListLi, Button, Container, Title } from './ContactList.syled';
 import { getFilter, getContacts, getLoading, getErrror } from "Redux/phonebookSlice";
 import { fetchContacts, deleteContact } from "Redux/phonebookOperations";
 import { useEffect } from "react";
+import { Form } from "components/Form/Form";
+import { Filter } from "components/Filter/Filter";
 export const ContactList = () => {
     const contacts = useSelector(getContacts);
     const filter = useSelector(getFilter);
@@ -13,11 +15,11 @@ export const ContactList = () => {
     useEffect(() => {
         dispatch(fetchContacts());
     }, [dispatch])
-    return (<ContactListUl>
+    return (<Container><Title>Phonebook</Title><Form /><Filter /><ContactListUl>
         {contacts.length === 0 && !loading && !error && <p>No contacts</p>}
         {loading && <p>Loading</p>}
         {error && <p>Oops somthing wrong</p>}
         {getFilteredContacts.map(item => <ContactListLi id={item.id} key={item.id}>{item.name}:{item.number}<Button type="button" onClick={() => dispatch(deleteContact(item.id))}>Delete</Button></ContactListLi>)}
-    </ContactListUl>)
+    </ContactListUl></Container>)
 }
 
