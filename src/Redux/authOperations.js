@@ -1,7 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from "axios";
-import { useSelector } from 'react-redux';
-import { getUserToken } from './phonebookSlice';
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 const setToken = token => {
     if (token) {
@@ -34,6 +32,7 @@ export const logOut = createAsyncThunk('auth/logout', async () => {
         return data;
     } catch (error) {
         console.log(error);
+
     }
 })
 export const fetchRefresh = createAsyncThunk('auth/refresh', async (token) => {

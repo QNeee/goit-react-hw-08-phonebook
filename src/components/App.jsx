@@ -12,11 +12,11 @@ import { Appbar } from "./Appbar/Appbar";
 import { useEffect } from "react";
 import { fetchRefresh } from "Redux/authOperations";
 export const App = () => {
-  const token = useSelector(getUserToken)
+  const token = useSelector(getUserToken);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchRefresh(token));
-  }, [dispatch])
+  }, [dispatch, token])
   return (<Container>
     {token && <Appbar />}
     <Routes>

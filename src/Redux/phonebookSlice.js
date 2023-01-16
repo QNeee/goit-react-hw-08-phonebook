@@ -41,12 +41,18 @@ export const phonebookSlice = createSlice({
             state.auth.token = null;
             state.auth.isLoggedIn = false;
         },
+        [fetchRefresh.pending]: (state) => {
+            state.isLoading = true;
+        },
         [fetchRefresh.fulfilled]: (state, action) => {
-            state.auth.isLoggedIn = true;
             state.auth.user = action.payload;
         },
+        [fetchRefresh.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
         [fetchContacts.pending]: (state) => {
-            state.contacts.isLoading = true;
+            state.isLoading = true;
         },
         [fetchContacts.fulfilled]: (state, action) => {
             state.isLoading = false;
@@ -99,3 +105,4 @@ export const getLoading = state => state.phonebook.isLoading;
 export const getUserToken = state => state.phonebook.auth.token;
 export const getIsLoggedIn = state => state.phonebook.auth.isLoggedIn;
 export const getUserEmail = state => state.phonebook.auth.user.email;
+export const getUser = state => state.phonebook.auth.user;
