@@ -43,12 +43,16 @@ export const phonebookSlice = createSlice({
         },
         [fetchRefresh.pending]: (state) => {
             state.isLoading = true;
+            state.error = null;
         },
         [fetchRefresh.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.auth.isLoggedIn = true;
             state.auth.user = action.payload;
         },
         [fetchRefresh.rejected]: (state, action) => {
             state.isLoading = false;
+            state.auth.token = null;
             state.error = action.payload;
         },
         [fetchContacts.pending]: (state) => {

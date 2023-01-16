@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ContactListUl, ContactListLi, Button, Container, Title } from './ContactList.syled';
-import { getFilter, getContacts, getLoading, getErrror } from "Redux/phonebookSlice";
+import { getFilter, getContacts, getLoading, getErrror, getUserToken } from "Redux/phonebookSlice";
 import { fetchContacts, deleteContact } from "Redux/phonebookOperations";
 import { useEffect } from "react";
 import { Form } from "components/Form/Form";
@@ -12,13 +12,14 @@ export const ContactList = () => {
     const dispatch = useDispatch();
     const loading = useSelector(getLoading);
     const error = useSelector(getErrror);
+    const token = useSelector(getUserToken);
     useEffect(() => {
         dispatch(fetchContacts());
     }, [dispatch])
     return (<Container><Title>Phonebook</Title><Form /><Filter /><ContactListUl>
         {contacts.length === 0 && !loading && !error && <p>No contacts</p>}
         {loading && <p>Loading</p>}
-        {error && <p>Oops somthing wrong</p>}
+        {error && !token && <p>Oops somthing wrong</p>}
         {getFilteredContacts.map(item => <ContactListLi id={item.id} key={item.id}>{item.name}:{item.number}<Button type="button" onClick={() => dispatch(deleteContact(item.id))}>Delete</Button></ContactListLi>)}
     </ContactListUl></Container>)
 }

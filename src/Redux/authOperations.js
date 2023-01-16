@@ -42,6 +42,6 @@ export const fetchRefresh = createAsyncThunk('auth/refresh', async (token) => {
         const { data } = await axios.get('/users/current')
         return data;
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 })
