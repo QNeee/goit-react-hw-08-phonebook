@@ -12,7 +12,7 @@ const initialState = {
     auth: {
         user: { name: null, email: null },
         token: null,
-        isLoggedIn: false
+        isLoggedIn: false,
     },
     isLoading: false,
     error: null,
@@ -47,8 +47,8 @@ export const phonebookSlice = createSlice({
         },
         [fetchRefresh.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.auth.isLoggedIn = true;
             state.auth.user = action.payload;
+            state.auth.isLoggedIn = true;
         },
         [fetchRefresh.rejected]: (state, action) => {
             state.isLoading = false;
@@ -61,7 +61,7 @@ export const phonebookSlice = createSlice({
         [fetchContacts.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.error = null;
-            state.contacts.items = action.payload
+            state.contacts.items = action.payload;
         },
         [fetchContacts.rejected]: (state, action) => {
             state.isLoading = false;

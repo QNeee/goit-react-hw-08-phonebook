@@ -16,7 +16,7 @@ export const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchRefresh(token));
-  }, [dispatch])
+  }, [dispatch, token])
   return (<Container>
     {token && <Appbar />}
     <Routes>
