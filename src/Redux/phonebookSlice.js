@@ -2,7 +2,7 @@
 
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchContacts, addContact, deleteContact } from './phonebookOperations';
-import { fetchRefresh, login, logOut, register } from './authOperations';
+import { fetchRefresh, login, logOut } from './authOperations';
 import { persistReducer } from "redux-persist";
 import storage from 'redux-persist/lib/storage'
 const initialState = {
@@ -15,6 +15,7 @@ const initialState = {
         isLoggedIn: false,
     },
     isLoading: false,
+    refreshed: false,
     error: null,
     filter: ''
 }
@@ -28,9 +29,6 @@ export const phonebookSlice = createSlice({
         },
     },
     extraReducers: {
-        [register.fulfilled]: (state, action) => {
-            state.auth.user = action.payload.user;
-        },
         [login.fulfilled]: (state, action) => {
             state.auth.user = action.payload.user;
             state.auth.token = action.payload.token;
@@ -46,14 +44,14 @@ export const phonebookSlice = createSlice({
             state.error = null;
         },
         [fetchRefresh.fulfilled]: (state, action) => {
+
             state.isLoading = false;
-            state.auth.user = action.payload;
-            state.auth.isLoggedIn = true;
+            // state.auth.user = action.payload;
         },
         [fetchRefresh.rejected]: (state, action) => {
             state.isLoading = false;
-            state.auth.token = null;
             state.error = action.payload;
+            state.auth.user = { name: null, email: null }
         },
         [fetchContacts.pending]: (state) => {
             state.isLoading = true;

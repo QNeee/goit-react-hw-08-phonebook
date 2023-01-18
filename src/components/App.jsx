@@ -6,17 +6,11 @@ import { Layout } from "./Layout/Layout";
 import { Register } from "./Register/Register";
 import { Login } from "./Login/Login";
 import { Home } from "./Home/Home";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getUserToken } from "Redux/phonebookSlice";
 import { Appbar } from "./Appbar/Appbar";
-import { useEffect } from "react";
-import { fetchRefresh } from "Redux/authOperations";
 export const App = () => {
   const token = useSelector(getUserToken);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchRefresh(token));
-  }, [dispatch, token])
   return (<Container>
     {token && <Appbar />}
     <Routes>

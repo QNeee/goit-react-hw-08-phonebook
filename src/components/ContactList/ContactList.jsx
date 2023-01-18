@@ -5,6 +5,7 @@ import { fetchContacts, deleteContact } from "Redux/phonebookOperations";
 import { useEffect } from "react";
 import { Form } from "components/Form/Form";
 import { Filter } from "components/Filter/Filter";
+import { fetchRefresh } from "Redux/authOperations";
 export const ContactList = () => {
     const contacts = useSelector(getContacts);
     const filter = useSelector(getFilter);
@@ -14,8 +15,10 @@ export const ContactList = () => {
     const error = useSelector(getErrror);
     const token = useSelector(getUserToken);
     useEffect(() => {
+        dispatch(fetchRefresh(token));
         dispatch(fetchContacts());
-    }, [dispatch])
+
+    }, [dispatch, token])
     return (<Container><Title>Phonebook</Title><Form /><Filter /><ContactListUl>
         {contacts.length === 0 && !loading && !error && <p>No contacts</p>}
         {loading && <p>Loading</p>}
