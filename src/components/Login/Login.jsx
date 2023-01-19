@@ -2,6 +2,7 @@ import { useState } from "react"
 import { LoginForm } from "./Login.styled";
 import { login } from "Redux/authOperations";
 import { useDispatch } from "react-redux";
+import { Button, Label } from "./Login.styled";
 export const Login = () => {
     const dispatch = useDispatch();
     const inputHandler = (e) => {
@@ -23,13 +24,13 @@ export const Login = () => {
     const [form, setForm] = useState({ email: '', password: '' })
     return <div><h1>Login Page</h1>
         <LoginForm onSubmit={handleSubmit}>
-            <label>E-mail
+            <Label>E-mail
                 <input type="email" name="email" value={form.email} onChange={inputHandler} autoComplete="off" />
-            </label>
-            <label>Password
+            </Label>
+            <Label>Password
                 <input type="password" name="password" value={form.password} onChange={inputHandler} autoComplete="off" />
-            </label>
-            <button type="submit">Login</button>
+            </Label>
+            <Button type="submit">Login</Button>
         </LoginForm>
     </div>
 }

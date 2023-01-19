@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from "react-redux"
 import { getUserEmail } from "Redux/phonebookSlice"
 import { logOut } from "Redux/authOperations"
+import { Container, Button } from "./Appbar.styled"
 export const Appbar = () => {
     const userEmail = useSelector(getUserEmail);
     const dispatch = useDispatch();
     const handleLogout = (e) => {
         dispatch(logOut());
     }
-    return <div>
+    return <Container>
         <p>{userEmail}</p>
-        <button type="button" onClick={handleLogout}>Logout</button>
-    </div>
+        <Button type="button" onClick={handleLogout}>Logout</Button>
+    </Container>
 }

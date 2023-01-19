@@ -15,7 +15,6 @@ const initialState = {
         isLoggedIn: false,
     },
     isLoading: false,
-    refreshed: false,
     error: null,
     filter: ''
 }
@@ -29,18 +28,43 @@ export const phonebookSlice = createSlice({
         },
     },
     extraReducers: {
+        [register.pending]: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
         [register.fulfilled]: (state, action) => {
             state.auth.user = action.payload.user;
+        },
+        [register.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+        [login.pending]: (state) => {
+            state.isLoading = true;
+            state.error = null;
         },
         [login.fulfilled]: (state, action) => {
             state.auth.user = action.payload.user;
             state.auth.token = action.payload.token;
             state.auth.isLoggedIn = true;
         },
+        [login.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+            state.auth.token = null;
+        },
+        [logOut.pending]: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
         [logOut.fulfilled]: (state) => {
             state.auth.user = { name: null, email: null }
             state.auth.token = null;
             state.auth.isLoggedIn = false;
+        },
+        [logOut.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
         },
         [fetchRefresh.pending]: (state) => {
             state.isLoading = true;

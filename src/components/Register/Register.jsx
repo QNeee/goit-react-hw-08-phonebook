@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { register } from "Redux/authOperations";
-import { RegisterForm } from "./Register.styled";
+import { RegisterForm, Button, Label } from "./Register.styled";
 export const Register = () => {
+    const navigate = useNavigate();
     const [form, setForm] = useState({ name: '', password: '', email: '' });
     const dispatch = useDispatch();
     const inputHandler = (e) => {
@@ -21,19 +23,20 @@ export const Register = () => {
         }
         dispatch(register(newUser));
         setForm({ name: '', password: '', email: '' });
+        navigate('/login');
     }
     return <div><h1>Register Page</h1>
         <RegisterForm onSubmit={handleSubmit}>
-            <label>Name
+            <Label>Name
                 <input type="text" name="name" value={form.name} onChange={inputHandler} autoComplete="off" />
-            </label>
-            <label>E-mail
+            </Label>
+            <Label>E-mail
                 <input type="email" name="email" value={form.email} onChange={inputHandler} autoComplete="off" />
-            </label>
-            <label>Password
+            </Label>
+            <Label>Password
                 <input type="password" name="password" value={form.password} onChange={inputHandler} autoComplete="off" />
-            </label>
-            <button type="submit">Register</button>
+            </Label>
+            <Button type="submit">Register</Button>
         </RegisterForm>
     </div>
 }

@@ -16,12 +16,10 @@ export const ContactList = () => {
     const token = useSelector(getUserToken);
     useEffect(() => {
         dispatch(fetchRefresh(token));
-        setTimeout(() => {
-            dispatch(fetchContacts());
-        }, 0);
+        dispatch(fetchContacts());
     }, [dispatch, token])
     return (<Container><Title>Phonebook</Title><Form /><Filter /><ContactListUl>
-        {contacts.length === 0 && !loading && !error && !token && <p>No contacts</p>}
+        {contacts.length === 0 && !loading && !error && <p>No contacts</p>}
         {loading && <p>Loading</p>}
         {error && !token && <p>Oops somthing wrong</p>}
         {getFilteredContacts.map(item => <ContactListLi id={item.id} key={item.id}>{item.name}:{item.number}<Button type="button" onClick={() => dispatch(deleteContact(item.id))}>Delete</Button></ContactListLi>)}

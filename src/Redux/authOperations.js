@@ -7,22 +7,22 @@ const setToken = token => {
     }
     axios.defaults.headers.common.authorization = '';
 };
-export const register = createAsyncThunk('auth/register', async data => {
+export const register = createAsyncThunk('auth/register', async (data, { rejectWithValue }) => {
     try {
         const { data: result } = await axios.post('/users/signup', data);
         setToken(result.token);
         return result;
     } catch (error) {
-        console.log(error);
+        return rejectWithValue(error);
     }
 })
-export const login = createAsyncThunk('auth/login', async data => {
+export const login = createAsyncThunk('auth/login', async (data, { rejectWithValue }) => {
     try {
         const { data: result } = await axios.post('/users/login', data);
         setToken(result.token);
         return result;
     } catch (error) {
-        console.log(error);
+        return rejectWithValue(error);
     }
 })
 export const logOut = createAsyncThunk('auth/logout', async () => {
