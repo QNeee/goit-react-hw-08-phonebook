@@ -14,6 +14,7 @@ const initialState = {
         token: null,
         isLoggedIn: false,
     },
+    refreshed: false,
     isLoading: false,
     error: null,
     filter: ''
@@ -29,14 +30,12 @@ export const phonebookSlice = createSlice({
     },
     extraReducers: {
         [register.pending]: (state) => {
-            state.isLoading = true;
             state.error = null;
         },
         [register.fulfilled]: (state, action) => {
             state.auth.user = action.payload.user;
         },
         [register.rejected]: (state, action) => {
-            state.isLoading = false;
             state.error = action.payload;
         },
         [login.pending]: (state) => {
@@ -44,6 +43,7 @@ export const phonebookSlice = createSlice({
             state.error = null;
         },
         [login.fulfilled]: (state, action) => {
+            state.isLoading = false;
             state.auth.user = action.payload.user;
             state.auth.token = action.payload.token;
             state.auth.isLoggedIn = true;
@@ -61,6 +61,7 @@ export const phonebookSlice = createSlice({
             state.auth.user = { name: null, email: null }
             state.auth.token = null;
             state.auth.isLoggedIn = false;
+            state.isLoading = false;
         },
         [logOut.rejected]: (state, action) => {
             state.isLoading = false;
@@ -71,7 +72,7 @@ export const phonebookSlice = createSlice({
             state.error = null;
         },
         [fetchRefresh.fulfilled]: (state, action) => {
-
+            state.refreshed = true;
             state.isLoading = false;
             // state.auth.user = action.payload;
         },
@@ -84,6 +85,7 @@ export const phonebookSlice = createSlice({
             state.isLoading = true;
         },
         [fetchContacts.fulfilled]: (state, action) => {
+            state.refreshed = false;
             state.isLoading = false;
             state.error = null;
             state.contacts.items = action.payload;
@@ -135,3 +137,4 @@ export const getUserToken = state => state.phonebook.auth.token;
 export const getIsLoggedIn = state => state.phonebook.auth.isLoggedIn;
 export const getUserEmail = state => state.phonebook.auth.user.email;
 export const getUser = state => state.phonebook.auth.user;
+export const getRefreshed = state => state.phonebook.refreshed;

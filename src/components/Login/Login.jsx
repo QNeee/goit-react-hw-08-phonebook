@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { LoginForm } from "./Login.styled";
 import { login } from "Redux/authOperations";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Label } from "./Login.styled";
+import { getLoading } from "Redux/phonebookSlice";
 export const Login = () => {
     const [form, setForm] = useState({ email: '', password: '' })
     const dispatch = useDispatch();
+    const loading = useSelector(getLoading);
     const inputHandler = (e) => {
         const { name, value } = e.target;
         setForm(prev => ({
@@ -24,7 +26,7 @@ export const Login = () => {
         setForm({ email: '', password: '' });
     }
     return <div><h1>Login Page</h1>
-        <LoginForm onSubmit={handleSubmit}>
+        {!loading ? <LoginForm onSubmit={handleSubmit}>
             <Label>E-mail
                 <input type="email" name="email" value={form.email} onChange={inputHandler} autoComplete="off" />
             </Label>
@@ -32,6 +34,6 @@ export const Login = () => {
                 <input type="password" name="password" value={form.password} onChange={inputHandler} autoComplete="off" />
             </Label>
             <Button type="submit">Login</Button>
-        </LoginForm>
+        </LoginForm> : <div>Loading...</div>}
     </div>
 }
