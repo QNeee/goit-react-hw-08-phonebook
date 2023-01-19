@@ -21,8 +21,9 @@ export const Register = () => {
             email: form.email,
             password: form.password
         }
+        if (form.email === '' || form.password === '' || form.name === '') return;
         dispatch(register(newUser));
-        setForm({ name: '', password: '', email: '' });
+        setForm({ name: '', email: '', password: '' });
         navigate('/login');
     }
     return <div><h1>Register Page</h1>

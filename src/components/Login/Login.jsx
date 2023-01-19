@@ -4,6 +4,7 @@ import { login } from "Redux/authOperations";
 import { useDispatch } from "react-redux";
 import { Button, Label } from "./Login.styled";
 export const Login = () => {
+    const [form, setForm] = useState({ email: '', password: '' })
     const dispatch = useDispatch();
     const inputHandler = (e) => {
         const { name, value } = e.target;
@@ -18,10 +19,10 @@ export const Login = () => {
             email: form.email,
             password: form.password
         }
+        if (form.email === '' || form.password === '') return;
         dispatch(login(user));
-        setForm({ password: '', email: '' });
+        setForm({ email: '', password: '' });
     }
-    const [form, setForm] = useState({ email: '', password: '' })
     return <div><h1>Login Page</h1>
         <LoginForm onSubmit={handleSubmit}>
             <Label>E-mail
