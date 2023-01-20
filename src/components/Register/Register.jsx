@@ -14,6 +14,7 @@ export const Register = () => {
             [name]: value,
         }));
     }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const newUser = {
@@ -29,13 +30,14 @@ export const Register = () => {
     return <div><h1>Register Page</h1>
         <RegisterForm onSubmit={handleSubmit}>
             <Label>Name
-                <input type="text" name="name" value={form.name} onChange={inputHandler} autoComplete="off" />
+                <input type="text" name="name" value={form.name} required onChange={inputHandler} autoComplete="off" />
             </Label>
             <Label>E-mail
-                <input type="email" name="email" value={form.email} onChange={inputHandler} autoComplete="off" />
+                <input type="email" name="email" value={form.email} required onChange={inputHandler} placeholder="example@mail.com" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" autoComplete="off" />
             </Label>
             <Label>Password
-                <input type="password" name="password" value={form.password} onChange={inputHandler} autoComplete="off" />
+                <input type="password" name="password" value={form.password} onChange={inputHandler} placeholder="minimum 8 characters"
+                    required minLength="8" autoComplete="off" />
             </Label>
             <Button type="submit">Register</Button>
         </RegisterForm>

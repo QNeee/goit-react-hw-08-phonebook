@@ -13,6 +13,7 @@ export const register = createAsyncThunk('auth/register', async (data, { rejectW
         setToken(result.token);
         return result;
     } catch (error) {
+
         return rejectWithValue(error);
     }
 })
